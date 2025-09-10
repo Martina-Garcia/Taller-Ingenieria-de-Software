@@ -1,1 +1,3 @@
-# Taller-Ingenieria-de-Software
+DOCUMENTACION
+To do
+Configurar .env
