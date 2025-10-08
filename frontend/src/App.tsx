@@ -168,10 +168,11 @@ const PileStore = () => {
 
       {/* Products Grid */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-2xl font-bold text-gray-900">
-            Productos Destacados
-          </h3>
+        <h3 className="text-3xl font-bold text-gray-900 text-center mb-6">
+          Productos Destacados
+        </h3>
+        
+        <div className="flex items-center justify-start mb-6">
           <select className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option>Más Populares</option>
             <option>Menor Precio</option>
@@ -188,12 +189,9 @@ const PileStore = () => {
             >
               <div className="relative">
                 <div 
-                  className="w-full h-64 flex items-center justify-center"
+                  className="w-full h-64"
                   style={{ backgroundColor: product.color }}
                 >
-                  <span className="text-white text-4xl font-bold opacity-20">
-                    {product.name.split(' ')[0]}
-                  </span>
                 </div>
                 <button className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-md hover:bg-red-50 transition">
                   <Heart size={20} className="text-gray-600" />
@@ -237,13 +235,7 @@ const PileStore = () => {
       {/* Footer */}
       <footer className="bg-gray-900 text-white mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">PileStore</h3>
-              <p className="text-gray-400">
-                Tu tienda de tecnología de confianza
-              </p>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <h4 className="font-semibold mb-4">Ayuda</h4>
               <ul className="space-y-2 text-gray-400">
