@@ -1,8 +1,8 @@
 import { ShoppingCart, Heart, User, ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
-import { useFavorites } from '../context/FavoritesContext';
-import SearchBar from './SearchBar';
+import { useCart } from '../context/Carrito';
+import { useFavorites } from '../context/Favoritos';
+import SearchBar from './Buscador';
 
 const Header = () => {
   const navigate = useNavigate();

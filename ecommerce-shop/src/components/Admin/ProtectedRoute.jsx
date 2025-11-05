@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { useAdmin } from '../../context/AdminContext';
+import { useAdmin } from '../../context/Autenticacion';
 
 const ProtectedRoute = ({ children }) => {
   const { isAdminLoggedIn } = useAdmin();

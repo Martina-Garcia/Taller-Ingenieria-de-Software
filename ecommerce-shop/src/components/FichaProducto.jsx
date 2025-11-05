@@ -1,6 +1,6 @@
 import { Star, Heart, ShoppingCart } from 'lucide-react';
-import { useCart } from '../context/CartContext';
-import { useFavorites } from '../context/FavoritesContext';
+import { useCart } from '../context/Carrito';
+import { useFavorites } from '../context/Favoritos';
 import { useState } from 'react';
 
 const ProductCard = ({ product, onProductClick }) => {

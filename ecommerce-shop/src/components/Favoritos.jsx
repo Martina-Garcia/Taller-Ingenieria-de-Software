@@ -1,6 +1,6 @@
 import { X, Heart, ShoppingCart } from 'lucide-react';
-import { useFavorites } from '../context/FavoritesContext';
-import { useCart } from '../context/CartContext';
+import { useFavorites } from '../context/Favoritos';
+import { useCart } from '../context/Carrito';
 
 const FavoritesSidebar = () => {
   const { favorites, isFavoritesOpen, setIsFavoritesOpen, removeFromFavorites } = useFavorites();

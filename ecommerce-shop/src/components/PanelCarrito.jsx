@@ -1,5 +1,5 @@
 import { X, ShoppingCart, Trash2 } from 'lucide-react';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../context/Carrito';
 import { useNavigate } from 'react-router-dom';
 
 const CartSidebar = () => {

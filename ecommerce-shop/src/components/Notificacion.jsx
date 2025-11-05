@@ -1,4 +1,4 @@
-import { useCart } from '../context/CartContext';
+import { useCart } from '../context/Carrito';
 
 const SimpleToast = () => {
   const { notification } = useCart();

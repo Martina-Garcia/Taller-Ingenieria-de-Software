@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Check, CreditCard, Building2, Smartphone, ShoppingCart, Trash2 } from 'lucide-react';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../context/Carrito';
 
 const Checkout = () => {
   const navigate = useNavigate();

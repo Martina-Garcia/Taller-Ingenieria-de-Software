@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Save, Package } from 'lucide-react';
-import { useAdmin } from '../../context/AdminContext';
+import { useAdmin } from '../../context/Autenticacion';
 import { products as initialProducts } from '../../data/products';
 import { categories } from '../../data/products';
 

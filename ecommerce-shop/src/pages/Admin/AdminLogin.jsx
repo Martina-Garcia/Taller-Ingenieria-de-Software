@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Lock, AlertCircle, ShoppingBag } from 'lucide-react';
-import { useAdmin } from '../../context/AdminContext';
+import { useAdmin } from '../../context/Autenticacion';
 
 const AdminLogin = () => {
   const navigate = useNavigate();

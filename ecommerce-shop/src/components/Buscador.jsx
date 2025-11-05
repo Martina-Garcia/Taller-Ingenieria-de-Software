@@ -1,5 +1,5 @@
 import { Search, X } from 'lucide-react';
-import { useSearch } from '../context/SearchContext';
+import { useSearch } from '../context/Buscador';
 
 const SearchBar = () => {
   const { searchTerm, setSearchTerm, clearSearch } = useSearch();

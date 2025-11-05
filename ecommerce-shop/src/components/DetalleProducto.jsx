@@ -1,7 +1,7 @@
 import { X, Star, ShoppingCart, Heart, Plus, Minus } from 'lucide-react';
 import { useState } from 'react';
-import { useCart } from '../context/CartContext';
-import { useFavorites } from '../context/FavoritesContext';
+import { useCart } from '../context/Carrito';
+import { useFavorites } from '../context/Favoritos';
 
 const ProductModal = ({ product, isOpen, onClose }) => {
   const { addToCart } = useCart();
