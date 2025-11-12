@@ -1,85 +1,61 @@
-import { ShoppingCart, Heart, User, ShieldCheck } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { useCart } from '../context/Carrito';
-import { useFavorites } from '../context/Favoritos';
-import SearchBar from './Buscador';
+import { ShoppingBag, Heart, ShoppingCart, LogIn } from "lucide-react";
+import { useSearch } from "../context/Buscador";
+import { useCart } from "../context/Carrito";
+import { useAuth } from "../context/Autenticacion";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const { searchTerm, setSearchTerm } = useSearch();
+  const { setIsCartOpen } = useCart();
+  const { usuario, logout } = useAuth();
   const navigate = useNavigate();
-  const { getCartCount, setIsCartOpen } = useCart();
-  const { getFavoritesCount, setIsFavoritesOpen } = useFavorites();
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-40">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div className="flex items-center">
-            <button 
-              onClick={() => navigate('/')}
-              className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hover:opacity-80 transition"
-            >
-              PileStore
-            </button>
-          </div>
-
-          {/* Barra de búsqueda */}
-          <div className="hidden md:flex flex-1 max-w-md mx-8">
-            <SearchBar />
-          </div>
-
-          {/* Iconos de acción */}
-          <div className="flex items-center gap-4">
-            {/* Botón Admin */}
-            <button
-              onClick={() => navigate('/admin/login')}
-              className="p-2 hover:bg-blue-50 rounded-full transition group"
-              title="Panel de administración"
-            >
-              <ShieldCheck size={24} className="text-gray-700 group-hover:text-blue-600 transition" />
-            </button>
-
-            {/* Favoritos */}
-            <button 
-              onClick={() => setIsFavoritesOpen(true)}
-              className="p-2 hover:bg-gray-100 rounded-full transition relative"
-              title="Favoritos"
-            >
-              <Heart size={24} className="text-gray-700" />
-              {getFavoritesCount() > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                  {getFavoritesCount()}
-                </span>
-              )}
-            </button>
-            
-            {/* Usuario */}
-            <button 
-              className="p-2 hover:bg-gray-100 rounded-full transition"
-              title="Cuenta"
-            >
-              <User size={24} className="text-gray-700" />
-            </button>
-
-            {/* Carrito */}
-            <button 
-              onClick={() => setIsCartOpen(true)}
-              className="p-2 hover:bg-gray-100 rounded-full transition relative"
-              title="Carrito de compras"
-            >
-              <ShoppingCart size={24} className="text-gray-700" />
-              {getCartCount() > 0 && (
-                <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                  {getCartCount()}
-                </span>
-              )}
-            </button>
-          </div>
+    <header className="bg-white shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between gap-4">
+        <div
+          className="flex items-center gap-2 cursor-pointer"
+          onClick={() => navigate("/")}
+        >
+          <ShoppingBag className="text-blue-600" />
+          <span className="font-bold text-xl">PileStore</span>
         </div>
 
-        {/* Búsqueda móvil */}
-        <div className="md:hidden pb-3">
-          <SearchBar />
+        <div className="flex-1 max-w-xl">
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Buscar productos..."
+            className="w-full border border-gray-300 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => navigate("/login")}
+            className="flex items-center gap-1 text-sm text-gray-700 hover:text-blue-600"
+          >
+            <LogIn size={18} />
+            {usuario ? usuario.email : "Ingresar"}
+          </button>
+
+
+          <button
+            className="relative p-2 rounded-full hover:bg-gray-100"
+            onClick={() => setIsCartOpen(true)}
+          >
+            <ShoppingCart size={20} className="text-gray-600" />
+          </button>
+
+          {usuario && (
+            <button
+              onClick={logout}
+              className="text-xs text-gray-500 hover:text-red-500"
+            >
+              Cerrar sesión
+            </button>
+          )}
         </div>
       </div>
     </header>

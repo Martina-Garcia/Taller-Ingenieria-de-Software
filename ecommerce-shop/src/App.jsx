@@ -1,30 +1,31 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { CartProvider } from './context/CartContext';
-import { FavoritesProvider } from './context/FavoritesContext';
-import { SearchProvider } from './context/SearchContext';
-import { AdminProvider } from './context/AdminContext';
-import Home from './pages/Home';
-import Checkout from './pages/Checkout';
-import AdminLogin from './pages/admin/AdminLogin';
-import AdminDashboard from './pages/admin/AdminDashboard';
-import ProductForm from './pages/admin/ProductForm';
-import ProtectedRoute from './components/admin/ProtectedRoute';
-import SimpleToast from './components/SimpleToast';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import { AuthProvider } from "./context/Autenticacion";
+import { SearchProvider } from "./context/Buscador";
+import { CartProvider } from "./context/Carrito";
+import Inicio from "./pages/Inicio";
+import Checkout from "./pages/Checkout";
+import Login from "./pages/Login";
+import AdminDashboard from "./pages/AdminDashboard";
+import ProductForm from "./pages/ProductForm";
+
+import ProtectedRoute from "./components/ProtectedRoute";
+import SimpleToast from "./components/Notificacion";
 
 function App() {
   return (
     <Router>
-      <SearchProvider>
-        <FavoritesProvider>
-          <CartProvider>
-            <AdminProvider>
+      <AuthProvider>
+        <SearchProvider>
+            <CartProvider>
               <Routes>
-                {/* Rutas públicas */}
-                <Route path="/" element={<Home />} />
+                {/* públicas */}
+                <Route path="/" element={<Inicio />} />
                 <Route path="/checkout" element={<Checkout />} />
-                
-                {/* Rutas de administración */}
-                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/admin/login" element={<Login />} />
+
+                {/* admin protegidas */}
                 <Route
                   path="/admin/dashboard"
                   element={
@@ -50,11 +51,11 @@ function App() {
                   }
                 />
               </Routes>
+
               <SimpleToast />
-            </AdminProvider>
-          </CartProvider>
-        </FavoritesProvider>
-      </SearchProvider>
+            </CartProvider>
+        </SearchProvider>
+      </AuthProvider>
     </Router>
   );
 }

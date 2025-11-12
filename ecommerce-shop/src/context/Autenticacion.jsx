@@ -1,89 +1,51 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useEffect, useState } from "react";
+import { login as apiLogin } from "../api/api";
 
-const AdminContext = createContext();
+const AuthContext = createContext();
 
-export const AdminProvider = ({ children }) => {
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
-  const [adminProducts, setAdminProducts] = useState([]);
+export function AuthProvider({ children }) {
+  const [usuario, setUsuario] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  // Cargar estado de login
+  // restaurar sesión
   useEffect(() => {
-    const loginStatus = localStorage.getItem('adminLoggedIn');
-    setIsAdminLoggedIn(loginStatus === 'true');
-  }, []);
-
-  // Cargar productos del localStorage
-  useEffect(() => {
-    const storedProducts = localStorage.getItem('adminProducts');
-    if (storedProducts) {
-      setAdminProducts(JSON.parse(storedProducts));
+    const saved = localStorage.getItem("usuario");
+    if (saved) {
+      try {
+        setUsuario(JSON.parse(saved));
+      } catch {
+        localStorage.removeItem("usuario");
+      }
     }
   }, []);
 
-  // Guardar productos en localStorage
-  const saveProducts = (products) => {
-    setAdminProducts(products);
-    localStorage.setItem('adminProducts', JSON.stringify(products));
-  };
-
-  const login = (password) => {
-    // Contraseña simple: "admin123"
-    if (password === 'admin123') {
-      setIsAdminLoggedIn(true);
-      localStorage.setItem('adminLoggedIn', 'true');
-      return true;
+  const login = async (email, password) => {
+    setLoading(true);
+    try {
+      const data = await apiLogin(email, password);
+      const user = data.user ?? data;
+      setUsuario(user);
+      localStorage.setItem("usuario", JSON.stringify(user));
+      return user;
+    } finally {
+      setLoading(false);
     }
-    return false;
   };
 
   const logout = () => {
-    setIsAdminLoggedIn(false);
-    localStorage.removeItem('adminLoggedIn');
-  };
-
-  const addProduct = (product) => {
-    const newProduct = {
-      ...product,
-      id: Date.now(),
-      createdAt: new Date().toISOString()
-    };
-    const updatedProducts = [...adminProducts, newProduct];
-    saveProducts(updatedProducts);
-  };
-
-  const updateProduct = (id, updatedProduct) => {
-    const updatedProducts = adminProducts.map(product =>
-      product.id === id ? { ...product, ...updatedProduct } : product
-    );
-    saveProducts(updatedProducts);
-  };
-
-  const deleteProduct = (id) => {
-    const updatedProducts = adminProducts.filter(product => product.id !== id);
-    saveProducts(updatedProducts);
+    setUsuario(null);
+    localStorage.removeItem("usuario");
   };
 
   return (
-    <AdminContext.Provider
-      value={{
-        isAdminLoggedIn,
-        adminProducts,
-        login,
-        logout,
-        addProduct,
-        updateProduct,
-        deleteProduct
-      }}
+    <AuthContext.Provider
+      value={{ usuario, isAuthenticated: !!usuario, loading, login, logout }}
     >
       {children}
-    </AdminContext.Provider>
+    </AuthContext.Provider>
   );
-};
+}
 
-export const useAdmin = () => {
-  const context = useContext(AdminContext);
-  if (!context) {
-    throw new Error('useAdmin debe usarse dentro de AdminProvider');
-  }
-  return context;
-};
+export function useAuth() {
+  return useContext(AuthContext);
+}
