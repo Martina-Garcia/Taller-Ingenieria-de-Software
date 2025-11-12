@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import ProductCard from "../components/FichaProducto";
 import CartSidebar from "../components/PanelCarrito";
-import FavoritesSidebar from "../components/Favoritos";
 import ProductModal from "../components/DetalleProducto";
 import { useSearch } from "../context/Buscador";
 import { fetchProductos } from "../api/api";
@@ -157,7 +156,6 @@ const Inicio = () => {
       </main>
 
       <CartSidebar />
-      <FavoritesSidebar />
       <ProductModal
         product={selectedProduct}
         isOpen={isModalOpen}

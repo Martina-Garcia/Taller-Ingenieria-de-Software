@@ -1,6 +1,5 @@
 import { Star, Heart, ShoppingCart } from "lucide-react";
 import { useCart } from "../context/Carrito";
-import { useFavorites } from "../context/Favoritos";
 
 const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 
@@ -18,16 +17,12 @@ const FichaProducto = ({ product, onProductClick }) => {
   const stock     = Number(product.stock ?? 0);
 
   const { addToCart } = useCart();
-  const { toggleFavorite, isFavorite } = useFavorites();
 
   const formatPrice = (n) =>
     new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP", minimumFractionDigits: 0 })
       .format(Number(n || 0));
 
-  const handleFavoriteClick = (e) => {
-    e.stopPropagation();
-    toggleFavorite({ id, name, price, image, category });
-  };
+  
 
   const handleAddToCart = (e) => {
     e.stopPropagation();
@@ -43,16 +38,7 @@ const FichaProducto = ({ product, onProductClick }) => {
       <div className="relative bg-gradient-to-br from-gray-100 to-gray-200 h-64 flex items-center justify-center">
         <span className="text-8xl">{image}</span>
 
-        <button
-          onClick={handleFavoriteClick}
-          className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-md hover:scale-110 transition-transform"
-          aria-label="Favorito"
-        >
-          <Heart
-            size={20}
-            className={isFavorite(id) ? "fill-red-500 text-red-500" : "text-gray-400"}
-          />
-        </button>
+        
       </div>
 
       {/* Contenido */}
