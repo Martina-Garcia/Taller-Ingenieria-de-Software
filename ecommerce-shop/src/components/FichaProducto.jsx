@@ -1,17 +1,16 @@
-import { Star, Heart, ShoppingCart } from "lucide-react";
+import { Star, ShoppingCart } from "lucide-react";
 import { useCart } from "../context/Carrito";
 
 const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 
 const FichaProducto = ({ product, onProductClick }) => {
-  if (!product) return null; // evita crashear si llega null
+  if (!product) return null;
 
-  // Normaliza campos para que la UI siempre tenga lo mismo
   const id        = product.id;
   const name      = product.name ?? product.nombre ?? "";
   const price     = Number(product.price ?? product.precio ?? 0);
   const image     = product.image ?? product.imagen ?? "💻";
-  const category  = product.category ?? product.categoria ?? "Otros";
+  const category  = product.category ?? product.categoria ?? "Otros"; // ya NO se muestra
   const rating    = clamp(Math.round(Number(product.rating ?? product.calificacion ?? 0)), 0, 5);
   const reviews   = Number(product.reviews ?? product.total_reviews ?? 0);
   const stock     = Number(product.stock ?? 0);
@@ -21,8 +20,6 @@ const FichaProducto = ({ product, onProductClick }) => {
   const formatPrice = (n) =>
     new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP", minimumFractionDigits: 0 })
       .format(Number(n || 0));
-
-  
 
   const handleAddToCart = (e) => {
     e.stopPropagation();
@@ -37,15 +34,16 @@ const FichaProducto = ({ product, onProductClick }) => {
       {/* Imagen */}
       <div className="relative bg-gradient-to-br from-gray-100 to-gray-200 h-64 flex items-center justify-center">
         <span className="text-8xl">{image}</span>
-
-        
       </div>
 
       {/* Contenido */}
       <div className="p-5">
+
+        {/* CATEGORÍA OCULTA
         <span className="text-xs font-semibold text-blue-600 uppercase tracking-wide">
           {category}
         </span>
+        */}
 
         <h3 className="mt-2 text-lg font-bold text-gray-800 line-clamp-1">{name}</h3>
 
