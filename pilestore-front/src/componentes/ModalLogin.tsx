@@ -2,6 +2,7 @@ import { FC, useState, FormEvent } from "react";
 import { X } from "lucide-react";
 import { usarAuth } from "../contexto/Auth";
 import { iniciarSesionApi } from "../api/api";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   abierto: boolean;
@@ -10,6 +11,7 @@ interface Props {
 
 const ModalLogin: FC<Props> = ({ abierto, cerrar }) => {
   const { iniciarSesion } = usarAuth();
+  const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [cargando, setCargando] = useState(false);
@@ -24,10 +26,18 @@ const ModalLogin: FC<Props> = ({ abierto, cerrar }) => {
 
     try {
       const usuario = await iniciarSesionApi(email, password);
+
       iniciarSesion(usuario);
       setEmail("");
       setPassword("");
       cerrar();
+
+      if (usuario.rol === "admin") {
+        navigate("/admin/pedidos");
+        return;
+      }
+
+     
     } catch (err) {
       setError("Credenciales inválidas o error en el servidor.");
     } finally {

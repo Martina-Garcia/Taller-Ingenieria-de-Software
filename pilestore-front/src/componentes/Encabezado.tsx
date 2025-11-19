@@ -1,16 +1,24 @@
 import { FC } from "react";
-import { Search, User } from "lucide-react";
+import { Search, User, ShoppingCart } from "lucide-react";
 import { usarAuth } from "../contexto/Auth";
+import { usarCarrito } from "../contexto/Carrito";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
   busqueda: string;
   setBusqueda: (valor: string) => void;
   abrirLogin: () => void;
+  abrirCarrito: () => void;
 }
 
-const Encabezado: FC<Props> = ({ busqueda, setBusqueda, abrirLogin }) => {
+const Encabezado: FC<Props> = ({
+  busqueda,
+  setBusqueda,
+  abrirLogin,
+  abrirCarrito,
+}) => {
   const { usuario, cerrarSesion, esAdmin } = usarAuth();
+  const { cantidadTotal } = usarCarrito();
   const navigate = useNavigate();
 
   return (
@@ -32,7 +40,19 @@ const Encabezado: FC<Props> = ({ busqueda, setBusqueda, abrirLogin }) => {
         />
       </div>
 
-      <div className="flex items-center gap-3 text-sm">
+      <div className="flex items-center gap-4 text-sm">
+        <button
+          onClick={abrirCarrito}
+          className="relative flex items-center justify-center bg-slate-800 rounded-full w-9 h-9"
+        >
+          <ShoppingCart size={18} />
+          {cantidadTotal > 0 && (
+            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] px-1 rounded-full">
+              {cantidadTotal}
+            </span>
+          )}
+        </button>
+
         {esAdmin && (
           <button
             onClick={() => navigate("/admin/pedidos")}

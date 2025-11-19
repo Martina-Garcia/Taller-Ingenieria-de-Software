@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import type { Producto } from "../api/api";
 import { obtenerProductos } from "../api/api";
+import type { Producto } from "../api/api";
 import Encabezado from "../componentes/Encabezado";
 import TarjetaProducto from "../componentes/TarjetaProducto";
-import ResumenCarrito from "../componentes/ResumenCarrito";
 import ModalLogin from "../componentes/ModalLogin";
+import PanelCarrito from "../componentes/PanelCarrito";
 
 export default function Inicio() {
   const [productos, setProductos] = useState<Producto[]>([]);
   const [busqueda, setBusqueda] = useState<string>("");
   const [loginAbierto, setLoginAbierto] = useState(false);
+  const [carritoAbierto, setCarritoAbierto] = useState(false);
 
   const cargarProductos = async () => {
     try {
@@ -30,6 +31,7 @@ export default function Inicio() {
         busqueda={busqueda}
         setBusqueda={setBusqueda}
         abrirLogin={() => setLoginAbierto(true)}
+        abrirCarrito={() => setCarritoAbierto(true)}
       />
 
       <main className="p-6 max-w-6xl mx-auto">
@@ -44,13 +46,16 @@ export default function Inicio() {
             ))}
           </div>
         )}
-
-        <ResumenCarrito />
       </main>
 
       <ModalLogin
         abierto={loginAbierto}
         cerrar={() => setLoginAbierto(false)}
+      />
+
+      <PanelCarrito
+        abierto={carritoAbierto}
+        cerrar={() => setCarritoAbierto(false)}
       />
     </div>
   );
